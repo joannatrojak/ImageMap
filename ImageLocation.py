@@ -1,11 +1,7 @@
-import PIL.Image
-import PIL.ExifTags
+from GPSPhoto import gpsphoto
 import os
 import os.path
 class Image:
-   'Common base class for all employees'
-   
-
    def __init__(self, location):
       self.location = location
 
@@ -15,17 +11,10 @@ class Image:
        images = self.getLocation()
        gpsLocation = []
        directory = os.path.dirname(os.path.abspath(__file__))
-       print(directory)
-       
+      
        for image in images: 
-           img = PIL.Image.open(os.path.join(directory, "images" ,image))
-           exif = {
-                     PIL.ExifTags.TAGS[k]: v
-                     for k, v in img._getexif().items()
-                        if k in PIL.ExifTags.TAGS
-                    }
-           gpsLocation.append(exif['GPSInfo'])
-       return gpsLocation
+        print(gpsphoto.getGPSData(image))
+   
            
            
 
@@ -37,6 +26,7 @@ image = Image("images")
 print(image)
 print(image.getLocation())
 print(image.extractData())
+print(image.convertToDegrees())
 
 
 
