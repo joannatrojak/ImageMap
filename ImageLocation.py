@@ -6,7 +6,7 @@ class Image:
    def __init__(self, location):
       self.location = location
    def getLocation(self, image):
-       directory = os.path.dirname(os.path.abspath(__file__)) + '\\' + self.location + '\\'
+       directory = os.path.dirname(os.path.abspath(__file__)) + '//' + self.location + '//'
        img = PIL.Image.open(directory + image + '.jpg')
        print(img)
        exif = {
