@@ -7,7 +7,14 @@ Created on Fri Aug 31 09:27:55 2018
 
 from flask import Flask, render_template, request
 from werkzeug import secure_filename
+import os
+import os.path
+
+UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/images'
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
 
 @app.route('/upload')
 def upload_file_template():
@@ -17,9 +24,10 @@ def upload_file_template():
 def upload_file():
    if request.method == 'POST':
       f = request.files['file']
-      print(f)
-      f.save(secure_filename(f.filename))
+      filename = secure_filename(f.filename)
+      f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
       return 'file uploaded successfully'
 
 if __name__ == '__main__':
    app.run(debug = True)
+   
