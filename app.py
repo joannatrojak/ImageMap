@@ -9,6 +9,7 @@ from flask import Flask, render_template, request
 from werkzeug import secure_filename
 import os
 import os.path
+from ImageLocation import Image
 
 UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/images'
 app = Flask(__name__)
@@ -23,11 +24,15 @@ def upload_file_template():
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
    if request.method == 'POST':
+      image = Image(app.config['UPLOAD_FOLDER'])
+      
       f = request.files['file']
       filename = secure_filename(f.filename)
       f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-      return 'file uploaded successfully'
+      return image.getLocation(filename)
+      #return 'file uploaded successfully'
 
 if __name__ == '__main__':
    app.run(debug = True)
+   app.secret_key='secret123'
    

@@ -4,10 +4,12 @@ import os
 import os.path
 class Image:
    def __init__(self, location):
-      self.location = location
+      self.location = location 
+   def __call__(self, location):
+       print location
    def getLocation(self, image):
-       directory = os.path.dirname(os.path.abspath(__file__)) + '//' + self.location + '//'
-       img = PIL.Image.open(directory + image + '.jpg')
+       directory =  os.path.dirname(os.path.abspath(__file__)) + '/images/'
+       img = PIL.Image.open(directory + image)
        print(img)
        exif = {
                      PIL.ExifTags.TAGS[k]: v
@@ -50,10 +52,8 @@ class Image:
    def __str__(self):
        return str(self.location)
       
-image = Image("images")
-print(image)
-print(image.getLocation('1'))
-#print(image.converToDegrees())
+
+
 
 
 
